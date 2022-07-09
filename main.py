@@ -1,4 +1,7 @@
 # names of hurricanes
+from collections import defaultdict
+
+
 names = ['Cuba I', 'San Felipe II Okeechobee', 'Bahamas', 'Cuba II', 'CubaBrownsville', 'Tampico', 'Labor Day', 'New England', 'Carol', 'Janet', 'Carla', 'Hattie', 'Beulah', 'Camille',
          'Edith', 'Anita', 'David', 'Allen', 'Gilbert', 'Hugo', 'Andrew', 'Mitch', 'Isabel', 'Ivan', 'Emily', 'Katrina', 'Rita', 'Wilma', 'Dean', 'Felix', 'Matthew', 'Irma', 'Maria', 'Michael']
 
@@ -69,17 +72,49 @@ def hurricane_dict():
 
 
 dict = hurricane_dict()
-# print(dict['Cuba I'])
+# print(dict)
 
-for key, value in dict.items():
-    print("These is '{0}' hurricane \n".format(key))
+
+# for key, value in dict.items():
+#     print("These is '{0}' hurricane \n".format(key))
 
 
 # write your construct hurricane by year dictionary function here:
+def hurricane_dict_year():
+    hurricane_dict_by_year = {}
+
+    for name, month, year, wind, area, damage, death in zip(names, months, years, max_sustained_winds, areas_affected, updated_damages_lst, deaths):
+        hurricane_dict_by_year.update({year: [{
+            "Name": name,
+            "Month": month,
+            "Year": year,
+            "Max. Sustained wind": wind,
+            "Area affected": area,
+            "Damages": damage,
+            "Deaths": death
+        }]})
+    return hurricane_dict_by_year
+
+
+dict_year = hurricane_dict_year()
+
+# print(dict_year[1932])
 
 
 # write your count affected areas function here:
+def count_affected_area(h_dict):
+    area_affected_dict = {}
+    for area in h_dict:
+        for location in h_dict[area]['Area affected']:
+            if not location in area_affected_dict:
+                area_affected_dict[location] = 1
+            else:
+                area_affected_dict[location] += 1
+    return area_affected_dict
 
+
+count_area = count_affected_area(dict)
+print(count_area)
 
 # write your find most affected area function here:
 
